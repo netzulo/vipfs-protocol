@@ -55,6 +55,9 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'eqeqeq': 'off',
     'react/no-is-mounted': 'warn',
+    '@typescript-eslint/no-unused-vars': 'warn',
+    'no-useless-constructor': 'warn',
+    '@typescript-eslint/no-explicit-any': 'warn',
   },
   settings: {
     react: {
