@@ -1,14 +1,11 @@
 module.exports = {
   env: {
-    browser: true,
+    node: true,
     es2021: true
   },
   extends: [
     'standard',
     'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:react/jsx-runtime',
-    'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/recommended',
     'prettier',
   ],
@@ -45,23 +42,14 @@ module.exports = {
     sourceType: 'module'
   },
   plugins: [
-    'react',
-    'react-refresh'
   ],
   rules: {
     'no-unused-vars': 'warn',
-    'no-undef': 'off',
-    'react/prop-types': 'off',
-    'react/react-in-jsx-scope': 'off',
+    'no-undef': 'off',  
     'eqeqeq': 'off',
-    'react/no-is-mounted': 'warn',
     '@typescript-eslint/no-unused-vars': 'warn',
     'no-useless-constructor': 'warn',
     '@typescript-eslint/no-explicit-any': 'warn',
   },
-  settings: {
-    react: {
-      version: 'detect'
-    }
-  }
+  settings: {}
 }
