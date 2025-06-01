@@ -7,12 +7,6 @@
 
 A robust TypeScript library for fragmenting, encrypting and uploading large video files to IPFS, using Ethereum-derived keys for security. Generates a JSON index to ensure video can be safely reassembled and decrypted later.
 
-<p align="center">
-  <a href="https://github.com/netzulo/vipfs-protocol">
-    <img src="./docs/logo.svg" alt="Logo" height="200" />
-  </a>
-</p>
-
 ---
 
 ## 🚀 Features
