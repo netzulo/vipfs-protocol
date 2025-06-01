@@ -61,16 +61,74 @@ describe('[services: VideoFragmenter]', () => {
 })
 
 describe('[services: FragmentEncryptor]', () => {
+  const mnemonic = EthereumWallet.generateMnemonic()
+  const wallet = new EthereumWallet(mnemonic)
+
   it('[FragmentEncryptor]: should be instantiable', () => {
-    const encryptor = new FragmentEncryptor({}) // TODO: usar EthereumWallet real más adelante
+    const encryptor = new FragmentEncryptor(wallet)
     expect(encryptor).toBeInstanceOf(FragmentEncryptor)
+  })
+
+  it('[FragmentEncryptor]: should encrypt and decrypt data correctly', async () => {
+    const encryptor = new FragmentEncryptor(wallet)
+    const originalData = Buffer.from('Hello, this is a test fragment!')
+    const index = 0
+
+    // Encrypt the data
+    const encryptedData = await encryptor.encrypt(originalData, index)
+    expect(encryptedData).toBeInstanceOf(Buffer)
+    expect(encryptedData.length).toBeGreaterThan(originalData.length)
+
+    // Decrypt the data
+    const decryptedData = await encryptor.decrypt(encryptedData, index)
+    expect(decryptedData.equals(originalData)).toBe(true)
+  })
+
+  it('[FragmentEncryptor]: different indices should produce different encrypted outputs', async () => {
+    const encryptor = new FragmentEncryptor(wallet)
+    const originalData = Buffer.from(
+      'Same fragment data, but different indices.',
+    )
+
+    const encryptedIndex0 = await encryptor.encrypt(originalData, 0)
+    const encryptedIndex1 = await encryptor.encrypt(originalData, 1)
+
+    expect(encryptedIndex0.equals(encryptedIndex1)).toBe(false)
   })
 })
 
 describe('[services: IPFSUploader]', () => {
+  // Replace with your actual Kubo API URL if different
+  const uploader = new IPFSUploader('http://localhost:5001/api/v0')
+
   it('[IPFSUploader]: should be instantiable', () => {
-    const uploader = new IPFSUploader({}) // TODO: usar ipfs-http-client real
     expect(uploader).toBeInstanceOf(IPFSUploader)
+  })
+
+  it('[IPFSUploader]: should upload and return a valid CID', async () => {
+    const data = Buffer.from('This is a test fragment for IPFS upload.')
+    const cid = await uploader.upload(data)
+
+    expect(typeof cid).toBe('string')
+    expect(cid.length).toBeGreaterThan(0)
+  })
+
+  it('[IPFSUploader]: should upload and download data without corruption', async () => {
+    const data = Buffer.from('This is a test fragment for IPFS round-trip.')
+    const cid = await uploader.upload(data)
+
+    const downloaded = await uploader.download(cid)
+    expect(downloaded.equals(data)).toBe(true)
+  })
+
+  it('[IPFSUploader]: different data should produce different CIDs', async () => {
+    const data1 = Buffer.from('First fragment data')
+    const data2 = Buffer.from('Second fragment data')
+
+    const cid1 = await uploader.upload(data1)
+    const cid2 = await uploader.upload(data2)
+
+    expect(cid1).not.toBe(cid2)
   })
 })
 

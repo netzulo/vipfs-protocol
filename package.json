@@ -19,10 +19,6 @@
     "./dist/bundle.css": {
       "import": "./dist/bundle.css",
       "require": "./dist/bundle.css"
-    },
-    "./node_modules/react": {
-      "import": "./node_modules/react/index.js",
-      "require": "./node_modules/react/index.js"
     }
   },
   "files": [
@@ -41,6 +37,7 @@
   },
   "dependencies": {
     "ethers": "^6.14.3",
+    "js-kubo-rpc-client": "^1.0.0",
     "uuid": "^11.1.0"
   },
   "devDependencies": {
@@ -54,7 +51,6 @@
     "@types/node": "^22.15.29",
     "@typescript-eslint/eslint-plugin": "^8.31.0",
     "@typescript-eslint/parser": "^8.31.1",
-    "autoprefixer": "^10.4.16",
     "babel-jest": "^29.7.0",
     "eslint": "^8.52.0",
     "eslint-config-prettier": "^9.0.0",
@@ -68,8 +64,6 @@
     "jest-junit": "^16.0.0",
     "jest-svg-transformer": "^1.0.0",
     "npx": "^10.2.2",
-    "postcss": "^8.4.32",
-    "postcss-nesting": "^12.0.1",
     "prettier": "^3.0.3",
     "typescript": "^5.8.3",
     "vite-plugin-dts": "^4.5.3"
