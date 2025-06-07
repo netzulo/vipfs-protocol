@@ -1,4 +1,4 @@
-import { create as createIpfsClient, IPFSHTTPClient } from 'js-kubo-rpc-client'
+import { create as createIpfsClient, IPFSHTTPClient } from 'ipfs-http-client'
 
 /**
  * IPFSUploader: Handles uploading and downloading of encrypted fragments to and from IPFS.

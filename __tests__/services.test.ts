@@ -1,6 +1,8 @@
 /**
  * @jest-environment node
  */
+import { statSync, writeFileSync, unlinkSync } from 'fs'
+import * as path from 'path'
 import {
   VideoFragmenter,
   FragmentEncryptor,
@@ -8,10 +10,7 @@ import {
   IndexManager,
   EthereumWallet,
 } from '../src/services'
-
-// for VideoFragmenter tests
-import { statSync } from 'fs'
-import path from 'path'
+import { FragmentMeta, IndexJson } from '../src/services/IndexManager'
 
 describe('[services: VideoFragmenter]', () => {
   const videoPath = path.join(__dirname, '../public/sample_1280x720.mp4')
@@ -133,11 +132,42 @@ describe('[services: IPFSUploader]', () => {
 })
 
 describe('[services: IndexManager]', () => {
-  it('[IndexManager]: should create an index', () => {
-    const manager = new IndexManager()
-    const index = manager.createIndex('videoId', [])
-    expect(index).toHaveProperty('videoId', 'videoId')
-    expect(index).toHaveProperty('fragments')
+  const indexManager = new IndexManager()
+  const videoId = 'video-123'
+  const fragments: FragmentMeta[] = [
+    { index: 0, cid: 'cid-0', timestamp: Date.now(), status: 'ok' },
+    { index: 1, cid: 'cid-1', timestamp: Date.now(), status: 'retry' },
+    { index: 2, cid: 'cid-2', timestamp: Date.now(), status: 'ok' },
+  ]
+
+  it('should create a valid index', () => {
+    const index = indexManager.createIndex(videoId, fragments)
+    expect(index.videoId).toBe(videoId)
+    expect(index.fragments).toHaveLength(3)
+    expect(index.createdAt).toBeGreaterThan(0)
+  })
+
+  it('should update fragment status correctly', () => {
+    const originalIndex = indexManager.createIndex(videoId, fragments)
+    const updatedIndex = indexManager.updateFragmentStatus(
+      originalIndex,
+      1,
+      'failed',
+    )
+    const target = updatedIndex.fragments.find((f) => f.index === 1)
+    expect(target?.status).toBe('failed')
+  })
+
+  it('should persist and load the index from a file', () => {
+    const indexPath = './test-index.json'
+    const index = indexManager.createIndex(videoId, fragments)
+    indexManager.saveToFile(indexPath, index)
+
+    const loaded = indexManager.loadFromFile(indexPath)
+    expect(loaded.videoId).toBe(videoId)
+    expect(loaded.fragments).toHaveLength(3)
+
+    unlinkSync(indexPath)
   })
 })
 
