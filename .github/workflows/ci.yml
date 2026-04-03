@@ -19,9 +19,17 @@ jobs:
       - name: NODE Setup
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
       - name: YARN Setup
-        run: npm install -g yarn
+        run: npm install -g yarn@1.22.22
+
+      - name: YARN Cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/yarn
+          key: ${{ runner.os }}-node22-yarn1-${{ hashFiles('package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node22-yarn1-
 
       - name: INTERNAL-CI
         run: yarn ci
