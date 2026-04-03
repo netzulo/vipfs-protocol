@@ -32,4 +32,4 @@ This document summarizes where core code, tests, automation, and knowledge live 
 - Update `docs/API.md` when constructor signatures, methods, or exposed behavior change.
 - Update `docs/DEVELOPMENT.md` or `docs/TESTING.md` when validation workflow changes.
 - Update `docs/OPERATIONS.md` when IPFS, Docker, or environment assumptions change.
-- Update `.github/README.md` when collaboration assets or slash-command workflows change.
+- Update `.github/COLLABORATION.md` when collaboration assets or slash-command workflows change.

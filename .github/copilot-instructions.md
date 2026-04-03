@@ -31,5 +31,5 @@ Prefer solutions that preserve this service-oriented design instead of introduci
 
 - Keep foundational knowledge in `docs/`.
 - Keep GitHub collaboration material in `.github/`.
-- Keep `docs/README.md` as the knowledge base entry point and `.github/README.md` as the collaboration asset index.
+- Keep `docs/README.md` as the knowledge base entry point and `.github/COLLABORATION.md` as the collaboration asset index.
 - Reuse repository terms consistently: fragment, encrypted fragment, CID, index JSON, mnemonic, Kubo API.

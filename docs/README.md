@@ -35,4 +35,4 @@ When documentation and implementation disagree, treat the code in `src/services/
 1. Confirm the behavior in `src/services/`, `__tests__/`, and `package.json`.
 2. Update the nearest document that owns the topic.
 3. Refresh cross-links here when a new durable knowledge document is added.
-4. Keep `.github/README.md` in sync when collaboration assets change.
+4. Keep `.github/COLLABORATION.md` in sync when collaboration assets change.

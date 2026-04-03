@@ -18,4 +18,4 @@ Use this checklist before changing repository knowledge.
 
 - `README.md`: external overview and quick-start.
 - `docs/README.md`: knowledge-base index.
-- `.github/README.md`: collaboration asset index.
+- `.github/COLLABORATION.md`: collaboration asset index.

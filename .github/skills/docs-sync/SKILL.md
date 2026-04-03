@@ -17,7 +17,7 @@ Use this skill when updating repository knowledge in `README.md`, `docs/`, or `.
 ## Procedure
 
 1. Verify the affected behavior against `src/services/`, `__tests__/`, `package.json`, and relevant automation files.
-2. Update the closest source document first, then adjust indexes such as `docs/README.md` or `.github/README.md` if navigation changed.
+2. Update the closest source document first, then adjust indexes such as `docs/README.md` or `.github/COLLABORATION.md` if navigation changed.
 3. Reuse the repository glossary consistently for terms like fragment, encrypted fragment, CID, index JSON, mnemonic, and Kubo API.
 4. Run the narrowest validation that proves the documented workflow is still correct.
 
