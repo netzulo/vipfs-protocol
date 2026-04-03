@@ -1,7 +1,7 @@
 /**
  * @jest-environment node
  */
-import { statSync, writeFileSync, unlinkSync } from 'fs'
+import { statSync, unlinkSync } from 'fs'
 import * as path from 'path'
 import {
   VideoFragmenter,
@@ -10,7 +10,7 @@ import {
   IndexManager,
   EthereumWallet,
 } from '../src/services'
-import { FragmentMeta, IndexJson } from '../src/services/IndexManager'
+import { FragmentMeta } from '../src/services/IndexManager'
 
 describe('[services: VideoFragmenter]', () => {
   const videoPath = path.join(__dirname, '../public/sample_1280x720.mp4')

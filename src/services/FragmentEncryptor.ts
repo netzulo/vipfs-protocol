@@ -19,7 +19,11 @@ export default class FragmentEncryptor {
    */
   private static readonly ivSize = 12 // 96 bits, recommended for GCM
 
-  constructor(private readonly wallet: EthereumWallet) {}
+  private readonly wallet: EthereumWallet
+
+  constructor(wallet: EthereumWallet) {
+    this.wallet = wallet
+  }
 
   /**
    * Encrypts a chunk of data using a unique key derived from the wallet and index.

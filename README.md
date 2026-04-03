@@ -1,28 +1,24 @@
-# VIPFS-Protocol
+# VIPFS Protocol
 
 ![GitHub stars](https://img.shields.io/github/stars/netzulo/vipfs-protocol.svg?style=social&label=Star)
 [![npm](https://img.shields.io/npm/v/vipfs-protocol.svg)](https://www.npmjs.com/package/vipfs-protocol)
 ![GitHub issues](https://img.shields.io/github/issues/netzulo/vipfs-protocol.svg)
 ![License](https://img.shields.io/github/license/netzulo/vipfs-protocol)
 
-A robust TypeScript library for fragmenting, encrypting and uploading large video files to IPFS, using Ethereum-derived keys for security. Generates a JSON index to ensure video can be safely reassembled and decrypted later.
+VIPFS Protocol is a TypeScript library for splitting large video files into fragments, encrypting each fragment with Ethereum-derived keys, uploading encrypted fragments to IPFS, and persisting the resulting metadata as a JSON index.
 
----
+## Features
 
-## 🚀 Features
+- Fragment large files with stream-based reads.
+- Encrypt each fragment independently with AES-256-GCM.
+- Derive deterministic encryption keys from an Ethereum mnemonic.
+- Upload and retrieve encrypted fragments through the Kubo HTTP API.
+- Persist fragment metadata and upload status through a portable JSON index.
 
-- 🔐 Fragmentation and encryption of videos with Ethereum-derived keys
-- 🧩 IPFS upload and index generation for decentralized storage
-- ♻️ Retry and resiliency system for reliable uploads
-- ⚡ TypeScript-first, fully type-safe API
-- 🧪 Modular design with unit tests for each step
-
----
-
-## 📦 Installation
+## Installation
 
 ```bash
-npm install vipfs
+npm install vipfs-protocol
 ```
 
 or
@@ -31,108 +27,108 @@ or
 yarn add vipfs-protocol
 ```
 
----
+## Usage
 
-## 🧪 Usage
-
-```tsx
+```ts
 import {
-  // helpers
-  // hooks
-  // services
-  VideoEncryptionManager,
+  EthereumWallet,
+  FragmentEncryptor,
+  IndexManager,
+  IPFSUploader,
+  VideoFragmenter,
 } from 'vipfs-protocol'
 
-const manager = new VideoEncryptionManager(myEthereumWallet)
-const indexJson = await manager.encryptAndUpload('/path/to/video.mp4')
-// Later, to reassemble the video:
-const videoBuffer = await manager.downloadAndDecrypt(indexJson)
+const wallet = new EthereumWallet(process.env.VIPFS_MNEMONIC as string)
+const fragmenter = new VideoFragmenter(5 * 1024 * 1024)
+const encryptor = new FragmentEncryptor(wallet)
+const uploader = new IPFSUploader('http://localhost:5001/api/v0')
+const indexManager = new IndexManager()
+
+const fragments = []
+let index = 0
+
+for await (const chunk of fragmenter.fragment('./public/sample_1280x720.mp4')) {
+  const encryptedChunk = await encryptor.encrypt(chunk, index)
+  const cid = await uploader.upload(encryptedChunk)
+
+  fragments.push({
+    index,
+    cid,
+    timestamp: Date.now(),
+    status: 'ok',
+  })
+
+  index += 1
+}
+
+const manifest = indexManager.createIndex('sample-video', fragments)
+indexManager.saveToFile('./sample-video.index.json', manifest)
 ```
 
-📘 For our website, visit [Github](https://github.com/netzulo/vipfs-protocol)
-📘 For full documentation, visit [Github](https://github.com/netzulo/vipfs-protocol)
+## Package Surface
 
----
+The current public API exports five services:
 
-## 🛠️ Development
+- `VideoFragmenter`
+- `FragmentEncryptor`
+- `EthereumWallet`
+- `IPFSUploader`
+- `IndexManager`
 
-### Setup
+## Development
+
+Setup:
 
 ```bash
-npm install
+yarn
 ```
 
-### Run dev server
+Watch TypeScript builds:
 
 ```bash
-npm run dev
+yarn dev
 ```
 
-### Full build & lint cycle
-
-```bash
-npm run ci
-```
-
-or 
+Run the project quality pipeline:
 
 ```bash
 yarn ci
 ```
 
-**⚠️ Reminder**: Clean up unused CSS classes in `public/output.css` after changes. Tailwind can generate many unused classes.
+## Scripts
 
----
+| Script | Description |
+| --- | --- |
+| `build` | Compile the library with TypeScript. |
+| `dev` | Run TypeScript in watch mode. |
+| `test` | Run Jest with coverage and JUnit output. |
+| `lint` | Run ESLint against `src/` and `__tests__/`. |
+| `lint:fix` | Apply ESLint fixes. |
+| `format` | Format `src/` and `__tests__/` with Prettier. |
+| `clean` | Remove build, coverage, lockfile, and dependency artifacts. |
+| `ci` | Execute clean, install, lint, format, test, build, and pack. |
 
-## 📜 NPM Scripts
+## Documentation
 
-| Script          | Description                                                                                      |
-|-----------------|--------------------------------------------------------------------------------------------------|
-| `dev`           | Starts the development server                                                                    |
-| `css`           | Builds the CSS                                                                                   |
-| `css:dev`       | Builds CSS in watch/dev mode                                                                     |
-| `test`          | Runs tests with coverage                                                                         |
-| `lint`          | Runs ESLint                                                                                      |
-| `lint:fix`      | Fixes lint errors                                                                                |
-| `format`        | Formats code using Prettier                                                                      |
-| `build`         | Builds for production                                                                            |
-| `preview`       | Previews the production build locally                                                            |
-| `ci`            | Runs tests, lint, and formatting                                                                 |
-| `clean`         | Cleans `dist`, `node_modules`, `package-lock.json`, etc.                                         |
+- [Knowledge Base](./docs/README.md)
+- [Architecture](./docs/ARCHITECTURE.md)
+- [API Map](./docs/API.md)
+- [Repository Map](./docs/REPOSITORY_MAP.md)
+- [Glossary](./docs/GLOSSARY.md)
+- [Development Workflow](./docs/DEVELOPMENT.md)
+- [Testing Strategy](./docs/TESTING.md)
+- [Operations Runbook](./docs/OPERATIONS.md)
+- [Contribution Guide](./docs/CONTRIBUTING.md)
 
----
+## Contributing
 
-## 🧩 Components / Modules
+Read [CONTRIBUTING.md](./CONTRIBUTING.md) before opening a pull request. The repository also includes GitHub issue templates, a pull request template, and Copilot collaboration guidance under `.github/`.
 
-Each module has dedicated tests to ensure reliability and to simplify future extensions.
+## Security
 
-- **VideoFragmenter** – Splits video files into fixed-size binary chunks
-- **FragmentEncryptor** – Encrypts/decrypts each chunk using Ethereum wallet-derived keys
-- **IPFSUploader** – Uploads/downloads each encrypted chunk to/from IPFS
-- **IndexManager** – Generates and updates the JSON index file with fragment metadata
-- **EthereumWallet** – Derives secure keys from an Ethereum wallet for encryption
+Read [SECURITY.md](./SECURITY.md) for responsible disclosure guidance.
 
----
-
-## 👥 Contributing
-
-We welcome contributions! Please read our [contributing guide](CONTRIBUTING.md) and follow the code style defined in `.eslintrc`.
-
-### Coverage
-
-Coverage is generated in `.coverage/index.html`, and you can view it in your browser. To generate coverage, run:
-
-```bash
-yarn test
-```
-
-This is an example of the coverage report:
-
-![Coverage](./docs/coverage.png)
-
----
-
-## 📄 License
+## License
 
 [MIT](./LICENSE)
 

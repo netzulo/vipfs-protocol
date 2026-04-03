@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security disclosure
+    url: mailto:netzuleando@gmail.com
+    about: Report vulnerabilities privately instead of opening a public issue.
+  - name: Knowledge base
+    url: https://github.com/netzulo/vipfs-protocol/tree/main/docs
+    about: Review the project documentation before opening a question.
