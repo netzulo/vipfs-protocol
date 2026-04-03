@@ -14,10 +14,10 @@ jobs:
 
     steps:
       - name: GIT Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: NODE Setup
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 22
       - name: YARN Setup
@@ -42,10 +42,10 @@ jobs:
 
     steps:
       - name: GIT Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: NODE Setup
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 22
       - name: YARN Setup
@@ -72,10 +72,10 @@ jobs:
 
     steps:
       - name: GIT Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: NODE Setup
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 22
       - name: YARN Setup
@@ -100,10 +100,10 @@ jobs:
 
     steps:
       - name: GIT Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: NODE Setup
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 22
       - name: YARN Setup
@@ -129,10 +129,10 @@ jobs:
 
     steps:
       - name: GIT Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: NODE Setup
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 22
       - name: YARN Setup
