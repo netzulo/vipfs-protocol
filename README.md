@@ -77,6 +77,9 @@ The current public API exports five services:
 
 ## Development
 
+Recommended runtime: Node.js 22.
+Recommended package manager: Yarn 1.22.22.
+
 Setup:
 
 ```bash

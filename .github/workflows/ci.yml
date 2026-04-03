@@ -19,9 +19,11 @@ jobs:
       - name: NODE Setup
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
+          cache: yarn
+          cache-dependency-path: yarn.lock
       - name: YARN Setup
-        run: npm install -g yarn
+        run: npm install -g yarn@1.22.22
 
       - name: INTERNAL-CI
         run: yarn ci
