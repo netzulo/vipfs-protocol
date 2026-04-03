@@ -2,6 +2,10 @@
 
 ## Local Setup
 
+Recommended runtime: Node.js 22 to match the GitHub Actions CI baseline.
+
+Recommended package manager: Yarn 1.22.22.
+
 Install dependencies:
 
 ```bash
@@ -34,11 +38,14 @@ Run tests:
 yarn test
 ```
 
-Run the full CI-equivalent workflow:
+Run the full local quality workflow:
 
 ```bash
-yarn ci
+yarn ci:local
 ```
+
+The GitHub Actions pipeline currently runs on Node.js 22.
+It also installs Yarn 1.22.22 explicitly, caches the Yarn 1 package cache using `package.json` as the repository key source, and runs lint, format validation, test, build, and pack as separate jobs.
 
 ## Project Layout
 

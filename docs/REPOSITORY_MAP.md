@@ -24,7 +24,7 @@ This document summarizes where core code, tests, automation, and knowledge live 
 - `yarn lint`: code style and static validation.
 - `yarn test`: Jest coverage.
 - `yarn build`: TypeScript compilation.
-- `yarn ci`: clean install plus lint, format, test, build, and pack.
+- `yarn ci:local`: clean install plus lint, format, test, build, and pack for local validation.
 
 ## When to Update Which Document
 
