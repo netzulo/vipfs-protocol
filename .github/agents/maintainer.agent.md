@@ -16,7 +16,7 @@ Help contributors make changes that respect the current service-based architectu
 
 - The public API is currently centered on `VideoFragmenter`, `FragmentEncryptor`, `EthereumWallet`, `IPFSUploader`, and `IndexManager`.
 - Tests live in `__tests__/` and use Jest.
-- CI currently runs through `yarn ci` on GitHub Actions.
+- GitHub Actions CI runs lint, format validation, test, build, and pack as separate jobs.
 - IPFS integration assumes a Kubo-compatible HTTP endpoint.
 
 ## Default Workflow

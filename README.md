@@ -95,7 +95,7 @@ yarn dev
 Run the project quality pipeline:
 
 ```bash
-yarn ci
+yarn ci:local
 ```
 
 ## Scripts
@@ -109,7 +109,7 @@ yarn ci
 | `lint:fix` | Apply ESLint fixes. |
 | `format` | Format `src/` and `__tests__/` with Prettier. |
 | `clean` | Remove build, coverage, lockfile, and dependency artifacts. |
-| `ci` | Execute clean, install, lint, format, test, build, and pack. |
+| `ci:local` | Execute the local all-in-one quality pipeline: clean, install, lint, format, test, build, and pack. |
 
 ## Documentation
 
