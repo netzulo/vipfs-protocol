@@ -53,11 +53,12 @@ const fragmenter = new VideoFragmenter(5 * 1024 * 1024)
 const encryptor = new FragmentEncryptor(wallet)
 const uploader = new IPFSUploader('http://localhost:5001/api/v0')
 const indexManager = new IndexManager()
+const sourceVideoPath = './public/sample_1280x720.mp4'
 
 const fragments = []
 let index = 0
 
-for await (const chunk of fragmenter.fragment('./public/sample_1280x720.mp4')) {
+for await (const chunk of fragmenter.fragment(sourceVideoPath)) {
   const encryptedChunk = await encryptor.encrypt(chunk, index)
   const cid = await uploader.upload(encryptedChunk)
 

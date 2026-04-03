@@ -1,5 +1,5 @@
 import { createCipheriv, createDecipheriv, randomBytes } from 'crypto'
-import EthereumWallet from './EthereumWallet'
+import EthereumWallet from './EthereumWallet.js'
 
 /**
  * FragmentEncryptor: Handles the encryption and decryption of individual video chunks.

@@ -2,32 +2,47 @@
   "name": "vipfs-protocol",
   "license": "MIT",
   "description": "A robust TypeScript library for fragmenting, encrypting and uploading large video files to IPFS, using Ethereum-derived keys for security. Generates a JSON index to ensure video can be safely reassembled and decrypted later.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": {
     "name": "vipfs-protocol",
     "url": "https://github.com/netzulo/vipfs-protocol"
   },
+  "homepage": "https://github.com/netzulo/vipfs-protocol#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/netzulo/vipfs-protocol.git"
+  },
+  "bugs": {
+    "url": "https://github.com/netzulo/vipfs-protocol/issues"
+  },
+  "keywords": [
+    "ipfs",
+    "video",
+    "fragmentation",
+    "encryption",
+    "ethereum",
+    "kubo",
+    "typescript"
+  ],
   "type": "module",
-  "main": "./dist/bundle.umd.js",
-  "module": "./dist/bundle.es.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/main.js",
+  "module": "./dist/main.js",
+  "types": "./dist/main.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/bundle.es.js",
-      "require": "./dist/bundle.umd.js"
-    },
-    "./dist/bundle.css": {
-      "import": "./dist/bundle.css",
-      "require": "./dist/bundle.css"
+      "types": "./dist/main.d.ts",
+      "import": "./dist/main.js",
+      "default": "./dist/main.js"
     }
   },
   "files": [
     "dist",
-    "public"
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "dev": "tsc -p tsconfig.json --watch",
+    "build": "rm -rf dist && tsc -p tsconfig.json",
+    "dev": "rm -rf dist && tsc -p tsconfig.json --watch",
     "test": "jest --collectCoverage --coverageDirectory=\".coverage/\" --ci --reporters=default --reporters=jest-junit --watchAll=false --detectOpenHandles --forceExit",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\" \"__tests__/**/*test*.{js,jsx,ts,tsx}\"",
     "lint:fix": "eslint --fix \"src/**/*.{js,jsx,ts,tsx,}\" \"__tests__/**/*test*.{js,jsx,ts,tsx}\"",
@@ -76,6 +91,7 @@
       ]
     },
     "moduleNameMapper": {
+      "^(\\.{1,2}/.*)\\.js$": "$1",
       "^ipfs-http-client$": "<rootDir>/mocks/ipfsHttpClient.ts",
       "\\.(jpg|ico|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/mocks/fileMock.js",
       "^.+\\.(css|less|scss)$": "identity-obj-proxy"
