@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - name: GIT Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: NODE Setup
         uses: actions/setup-node@v4
@@ -42,7 +42,7 @@ jobs:
 
     steps:
       - name: GIT Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: NODE Setup
         uses: actions/setup-node@v4
@@ -72,7 +72,7 @@ jobs:
 
     steps:
       - name: GIT Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: NODE Setup
         uses: actions/setup-node@v4
@@ -100,7 +100,7 @@ jobs:
 
     steps:
       - name: GIT Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: NODE Setup
         uses: actions/setup-node@v4
@@ -129,7 +129,7 @@ jobs:
 
     steps:
       - name: GIT Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: NODE Setup
         uses: actions/setup-node@v4
