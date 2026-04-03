@@ -1,29 +1,16 @@
+import js from '@eslint/js'
+import tseslint from '@typescript-eslint/eslint-plugin'
+import tsParser from '@typescript-eslint/parser'
+import eslintConfigPrettier from 'eslint-config-prettier'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import js from '@eslint/js'
-import { FlatCompat } from '@eslint/eslintrc'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-})
-
 export default [
-  ...compat.config({
-    env: {
-      node: true,
-      es2021: true,
-    },
-    extends: [
-      'standard',
-      'eslint:recommended',
-      'plugin:@typescript-eslint/recommended',
-      'prettier',
-    ],
-    ignorePatterns: [
+  {
+    ignores: [
       'dist',
       'public',
       'node_modules',
@@ -32,21 +19,11 @@ export default [
       'README.md',
       '.gitignore',
     ],
-    overrides: [
-      {
-        files: ['*.ts', '*.tsx'],
-        parser: '@typescript-eslint/parser',
-        parserOptions: {
-          ecmaVersion: 'latest',
-          sourceType: 'module',
-          project: './tsconfig.eslint.json',
-          tsconfigRootDir: __dirname,
-        },
-        plugins: ['@typescript-eslint'],
-        rules: {},
-      },
-    ],
-    parserOptions: {
+  },
+  js.configs.recommended,
+  {
+    files: ['src/**/*.{js,jsx,ts,tsx}', '__tests__/**/*test*.{js,jsx,ts,tsx}'],
+    languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
     },
@@ -54,10 +31,31 @@ export default [
       'no-unused-vars': 'warn',
       'no-undef': 'off',
       eqeqeq: 'off',
-      '@typescript-eslint/no-unused-vars': 'warn',
       'no-useless-constructor': 'warn',
+    },
+  },
+  {
+    files: ['src/**/*.{ts,tsx}', '__tests__/**/*.{ts,tsx}'],
+    languageOptions: {
+      parser: tsParser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        project: './tsconfig.eslint.json',
+        tsconfigRootDir: __dirname,
+      },
+    },
+    plugins: {
+      '@typescript-eslint': tseslint,
+    },
+    rules: {
+      ...tseslint.configs.recommended.rules,
+      'no-unused-vars': 'off',
+      'no-useless-constructor': 'off',
+      '@typescript-eslint/no-unused-vars': 'warn',
+      '@typescript-eslint/no-useless-constructor': 'warn',
       '@typescript-eslint/no-explicit-any': 'warn',
     },
-    settings: {},
-  }),
+  },
+  eslintConfigPrettier,
 ]

@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 // example: import file from '../src/services/file'
 
 describe('helpers: [/nofiles], no tests yet...', () => {
