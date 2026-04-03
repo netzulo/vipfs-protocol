@@ -41,45 +41,47 @@
     "uuid": "^11.1.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.9",
-    "@babel/plugin-proposal-unicode-property-regex": "^7.18.6",
-    "@babel/plugin-transform-unicode-property-regex": "^7.24.7",
-    "@babel/preset-env": "^7.23.9",
-    "@babel/preset-typescript": "^7.27.1",
-    "@testing-library/jest-dom": "^6.6.3",
+    "@eslint/js": "^10.0.1",
+    "@swc/core": "^1.13.3",
+    "@swc/jest": "^0.2.39",
     "@types/jest": "^30.0.0",
     "@types/node": "^22.15.29",
     "@typescript-eslint/eslint-plugin": "^8.31.0",
     "@typescript-eslint/parser": "^8.31.1",
-    "babel-jest": "^29.7.0",
-    "eslint": "^8.52.0",
+    "eslint": "^10.1.0",
     "eslint-config-prettier": "^9.0.0",
-    "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-import": "^2.29.0",
-    "eslint-plugin-n": "^17.24.0",
-    "eslint-plugin-promise": "^6.1.1",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^30.3.0",
-    "jest-environment-jsdom": "^30.3.0",
     "jest-junit": "^16.0.0",
-    "jest-svg-transformer": "^1.0.0",
-    "npx": "^10.2.2",
     "prettier": "^3.0.3",
-    "typescript": "^5.8.3",
-    "vite-plugin-dts": "^4.5.3"
+    "typescript": "^5.8.3"
   },
   "jest": {
     "transform": {
-      "^.+\\.(js|jsx|ts|tsx)$": "babel-jest"
+      "^.+\\.(js|jsx|ts|tsx)$": [
+        "@swc/jest",
+        {
+          "jsc": {
+            "target": "es2020",
+            "parser": {
+              "syntax": "typescript",
+              "tsx": true,
+              "dynamicImport": true
+            }
+          },
+          "module": {
+            "type": "commonjs"
+          }
+        }
+      ]
     },
     "moduleNameMapper": {
       "^ipfs-http-client$": "<rootDir>/mocks/ipfsHttpClient.ts",
       "\\.(jpg|ico|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/mocks/fileMock.js",
-      "^.+\\.svg$": "jest-svg-transformer",
       "^.+\\.(css|less|scss)$": "identity-obj-proxy"
     },
-    "setupFilesAfterEnv": [
-      "<rootDir>/setupTests.js"
+    "testPathIgnorePatterns": [
+      "<rootDir>/dist/"
     ],
     "coverageReporters": [
       "html",
