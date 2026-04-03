@@ -7,6 +7,16 @@
 
 VIPFS Protocol is a TypeScript library for splitting large video files into fragments, encrypting each fragment with Ethereum-derived keys, uploading encrypted fragments to IPFS, and persisting the resulting metadata as a JSON index.
 
+It is designed for workflows where large media assets need deterministic encryption, content-addressed storage, and a portable manifest that can be used later to recover fragment order and status.
+
+## What It Does
+
+- Splits a source video into fixed-size fragments without loading the whole file into memory.
+- Derives per-fragment encryption keys from an Ethereum mnemonic.
+- Encrypts each fragment independently with AES-256-GCM.
+- Uploads encrypted fragments to a Kubo-compatible IPFS HTTP API.
+- Persists an index JSON manifest with CIDs, timestamps, and fragment status values.
+
 ## Features
 
 - Fragment large files with stream-based reads.
@@ -74,6 +84,16 @@ The current public API exports five services:
 - `EthereumWallet`
 - `IPFSUploader`
 - `IndexManager`
+
+## Core Services
+
+- `VideoFragmenter`: reads a local file as stream-safe chunks.
+- `FragmentEncryptor`: encrypts and decrypts each fragment buffer.
+- `EthereumWallet`: derives deterministic 32-byte keys from a mnemonic.
+- `IPFSUploader`: uploads encrypted fragments and downloads them by CID.
+- `IndexManager`: creates, updates, saves, and loads the index JSON manifest.
+
+These services are exposed as composable primitives rather than a single orchestration manager.
 
 ## Development
 
