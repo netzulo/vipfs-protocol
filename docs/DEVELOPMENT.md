@@ -45,7 +45,7 @@ yarn ci
 ```
 
 The GitHub Actions pipeline currently runs on Node.js 22.
-It also installs Yarn 1.22.22 explicitly and uses dependency cache from `yarn.lock`.
+It also installs Yarn 1.22.22 explicitly and caches the Yarn 1 package cache using `package.json` as the repository key source.
 
 ## Project Layout
 
