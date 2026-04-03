@@ -28,4 +28,4 @@ yarn lint
 yarn test
 ```
 
-Run `yarn ci` when making broader changes to repository automation or release-facing behavior.
+Run `yarn ci:local` when making broader changes to repository automation or release-facing behavior.

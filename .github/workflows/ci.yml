@@ -9,6 +9,92 @@ on:
       - main
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: GIT Checkout
+        uses: actions/checkout@v4
+
+      - name: NODE Setup
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: YARN Setup
+        run: npm install -g yarn@1.22.22
+
+      - name: YARN Cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/yarn
+          key: ${{ runner.os }}-node22-yarn1-${{ hashFiles('package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node22-yarn1-
+
+      - name: Install Dependencies
+        run: yarn
+
+      - name: Lint
+        run: yarn lint
+
+  format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: GIT Checkout
+        uses: actions/checkout@v4
+
+      - name: NODE Setup
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: YARN Setup
+        run: npm install -g yarn@1.22.22
+
+      - name: YARN Cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/yarn
+          key: ${{ runner.os }}-node22-yarn1-${{ hashFiles('package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node22-yarn1-
+
+      - name: Install Dependencies
+        run: yarn
+
+      - name: Format Check
+        run: |
+          yarn format
+          git diff --exit-code
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: GIT Checkout
+        uses: actions/checkout@v4
+
+      - name: NODE Setup
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: YARN Setup
+        run: npm install -g yarn@1.22.22
+
+      - name: YARN Cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/yarn
+          key: ${{ runner.os }}-node22-yarn1-${{ hashFiles('package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node22-yarn1-
+
+      - name: Install Dependencies
+        run: yarn
+
+      - name: Test
+        run: yarn test
+
   build:
     runs-on: ubuntu-latest
 
@@ -19,10 +105,52 @@ jobs:
       - name: NODE Setup
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
       - name: YARN Setup
-        run: npm install -g yarn
+        run: npm install -g yarn@1.22.22
 
-      - name: INTERNAL-CI
-        run: yarn ci
+      - name: YARN Cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/yarn
+          key: ${{ runner.os }}-node22-yarn1-${{ hashFiles('package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node22-yarn1-
+
+      - name: Install Dependencies
+        run: yarn
+
+      - name: Build
+        run: yarn build
+
+  pack:
+    runs-on: ubuntu-latest
+    needs: [lint, format, test, build]
+
+    steps:
+      - name: GIT Checkout
+        uses: actions/checkout@v4
+
+      - name: NODE Setup
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: YARN Setup
+        run: npm install -g yarn@1.22.22
+
+      - name: YARN Cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/yarn
+          key: ${{ runner.os }}-node22-yarn1-${{ hashFiles('package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node22-yarn1-
+
+      - name: Install Dependencies
+        run: yarn
+
+      - name: Pack
+        run: |
+          yarn build
+          yarn pack
 

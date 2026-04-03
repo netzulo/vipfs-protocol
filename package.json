@@ -33,7 +33,7 @@
     "lint:fix": "eslint --fix \"src/**/*.{js,jsx,ts,tsx,}\" \"__tests__/**/*test*.{js,jsx,ts,tsx}\"",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,}\" \"__tests__/**/*test*.{js,jsx,ts,tsx}\" --config \".prettier.json\"",
     "clean": "rm -rf dist dist-stories dist-docs .coverage package-lock.json junit.xml *.tgz yarn.lock node_modules",
-    "ci": "yarn clean && yarn && yarn lint && yarn format && yarn test && yarn build && yarn pack"
+    "ci:local": "yarn clean && yarn && yarn lint && yarn format && yarn test && yarn build && yarn pack"
   },
   "dependencies": {
     "ethers": "^6.14.3",
@@ -56,7 +56,7 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.29.0",
-    "eslint-plugin-n": "^16.2.0",
+    "eslint-plugin-n": "^17.24.0",
     "eslint-plugin-promise": "^6.1.1",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^30.3.0",
