@@ -52,7 +52,7 @@
   },
   "dependencies": {
     "ethers": "^6.14.3",
-    "ipfs-http-client": "59.0.0",
+    "ipfs-http-client": "60.0.1",
     "uuid": "^11.1.0"
   },
   "devDependencies": {
